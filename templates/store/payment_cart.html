@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Payment{% endblock %}
+{% block content %}
+<div class="container py-5 text-center">
+    <h2 class="fw-bold mb-3">Complete Your Payment</h2>
+    <p class="lead text-muted mb-4">You are about to pay <strong>{{ cart.total_price }} Tk</strong>. Click the button below.</p>
+    
+    <div class="card card-custom" style="max-width: 400px; margin: auto;">
+        <div class="card-body p-4">
+            <button id="checkout-button" class="btn btn-success btn-lg w-100">
+                <i class="bi bi-credit-card-fill"></i> Pay with Card
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    var checkoutButton = document.getElementById("checkout-button");
+
+    checkoutButton.addEventListener("click", function () {
+        fetch("{% url 'create_cart_checkout_session' %}", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (session) {
+            return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(function (result) {
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function (error) {
+            console.error("Error:", error);
+        });
+    });
+</script>
+{% endblock %}

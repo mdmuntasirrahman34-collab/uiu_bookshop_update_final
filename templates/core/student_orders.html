@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}My Orders{% endblock %}
+{% block content %}
+<h3>My Orders</h3>
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Vendor</th>
+      <th>Status</th>
+      <th>Scheduled Time</th>
+      <th>Document</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders %}
+      <tr>
+        <td>{{ order.id }}</td>
+        <td>{{ order.vendor.username|default:"Not assigned" }}</td>
+
+        <td>
+          {% if order.status == 'pending' %}
+            <span class="badge bg-warning text-dark">{{ order.get_status_display }}</span>
+          {% elif order.status == 'in_progress' %}
+            <span class="badge bg-primary">{{ order.get_status_display }}</span>
+          {% elif order.status == 'done' %}
+            <span class="badge bg-success">{{ order.get_status_display }}</span>
+          {% endif %}
+        </td>
+        <td>{{ order.scheduled_time|default:"-" }}</td>
+        <td>
+          {% if order.document %}
+            <a href="{{ order.document.url }}" target="_blank">View</a>
+          {% endif %}
+        </td>
+        
+
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="text-center">No orders found.</td></tr>
+    {% endfor %}
+  </tbody>
+  
+</table>
+{% endblock %}

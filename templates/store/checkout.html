@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Checkout - Delivery Details{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card card-custom">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold text-center mb-4">Checkout</h2>
+                    
+                    <h4 class="mb-3">Order Summary</h4>
+                    <ul class="list-group mb-4">
+                        {% for item in cart.items.all %}
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>{{ item.item.name }} (x{{ item.quantity }})</span>
+                            <strong>{{ item.total_price }} Tk</strong>
+                        </li>
+                        {% endfor %}
+                        <li class="list-group-item d-flex justify-content-between bg-light">
+                            <span class="fw-bold">Total</span>
+                            <strong class="fw-bolder">{{ cart.total_price }} Tk</strong>
+                        </li>
+                    </ul>
+
+                    <hr class="my-4">
+
+                    <h4 class="mb-3">Delivery Details</h4>
+                    <form method="POST" action="{% url 'cart_checkout' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Full Address (Room, Building, Area)</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+                            Proceed to Payment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

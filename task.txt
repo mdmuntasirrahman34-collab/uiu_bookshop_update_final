@@ -1,0 +1,1 @@
+follow the same design and make a about page which has details of the team members. team  members name and id and images are given the folder named about team. make a modern and  professional looking about page and add the anchor to the nav bar correctly

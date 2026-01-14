@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Delivery Details{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+        
+        <div class="card-body p-4">
+          <h2 class="fw-bold text-dark mb-3">Delivery Details</h2>
+          <p class="text-muted">Please fill in your delivery information to complete your order for <strong>{{ order.item.name }}</strong>.</p>
+          <hr>
+
+          <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Full Name</label>
+              <input type="text" name="name" class="form-control border-secondary" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Phone Number</label>
+              <input type="text" name="phone" class="form-control border-secondary" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Full Address</label>
+              <textarea name="address" rows="3" class="form-control border-secondary" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gradient w-100 py-2 fw-bold shadow-sm">
+              🚚 Proceed to Payment
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .btn-gradient {
+    background: linear-gradient(135deg, #007bff, #00c4ff);
+    border: none;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    border-radius: 12px;
+  }
+  .btn-gradient:hover {
+    background: linear-gradient(135deg, #00c4ff, #007bff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+
+<div class="container mt-5 mb-5">
+  <h2 class="mb-4 text-center fw-bold text-gradient">📞 Contact UIU Bookshop</h2>
+
+  <p class="text-center text-muted mb-5 fs-5">
+    Have questions, feedback, or need help? Fill out the form below or reach out via email or social media.
+  </p>
+
+  <div class="row g-4">
+    <!-- Contact Form -->
+    <div class="col-md-6">
+      <div class="card p-4 shadow-lg border-0 rounded-4">
+        <h5 class="mb-4 fw-bold">Send us a message</h5>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="name" class="form-label fw-semibold">Full Name</label>
+            <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Your name">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label fw-semibold">Email Address</label>
+            <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="you@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="subject" class="form-label fw-semibold">Subject</label>
+            <input type="text" class="form-control form-control-lg" id="subject" name="subject" placeholder="Subject of your message">
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label fw-semibold">Message</label>
+            <textarea class="form-control form-control-lg" id="message" name="message" rows="6" placeholder="Write your message here"></textarea>
+          </div>
+          <button type="submit" class="btn btn-gradient w-100 py-2 fw-bold">
+            ✉️ Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="col-md-6">
+      <div class="card p-4 shadow-lg border-0 rounded-4 bg-light">
+        <h5 class="mb-4 fw-bold">Contact Info</h5>
+        <ul class="list-unstyled fs-6">
+          <li class="mb-3">
+            <i class="bi bi-envelope-fill me-2 text-primary"></i>
+            <strong>Email:</strong> <a href="mailto:support@uiubookshop.com">support@uiubookshop.com</a>
+          </li>
+          <li class="mb-3">
+            <i class="bi bi-telephone-fill me-2 text-success"></i>
+            <strong>Phone:</strong> +880 1234 567890
+          </li>
+          <li class="mb-3">
+            <i class="bi bi-geo-alt-fill me-2 text-danger"></i>
+            <strong>Address:</strong> Dhaka, Bangladesh
+          </li>
+        </ul>
+
+        <h6 class="mt-4 fw-bold">Follow Us</h6>
+        <div class="d-flex gap-3 fs-5">
+          <a href="#" class="text-primary"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-danger"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-info"><i class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Gradient title */
+  .text-gradient {
+    background: linear-gradient(90deg, #0d6efd, #20c997, #3c22ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gradient button */
+  .btn-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2, #22aaff);
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  .btn-gradient:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+
+  /* Card shadow enhancement */
+  .card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+</style>
+
+{% endblock %}

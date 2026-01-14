@@ -1,0 +1,27 @@
+{% extends "base_acc.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/United_International_University_Monogram.svg/250px-United_International_University_Monogram.svg.png" alt="" width="25%" class="mx-auto d-block my-4">
+  <h3 class="text-center mb-4">Create an Account</h3>
+
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <div class="text-danger small">{{ field.errors|striptags }}</div>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-custom w-100">Register</button>
+  </form>
+
+  <p class="text-center mt-3">
+    Already have an account? <a href="{% url 'login' %}">Login</a>
+  </p>
+</div>
+{% endblock %}

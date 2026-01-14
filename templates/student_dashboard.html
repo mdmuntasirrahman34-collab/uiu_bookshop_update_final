@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5">
+
+  <!-- Greeting -->
+  <h2 class="mb-4 text-center fw-bold text-gradient">
+    Welcome, {{ user.username }} 👨‍🎓
+  </h2>
+
+  <!-- Stats Cards -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 p-4 text-center rounded-4 hover-card">
+        <h6 class="text-muted fw-semibold">Total Orders</h6>
+        <h2 class="text-primary fw-bold">{{ total_orders }}</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 p-4 text-center rounded-4 hover-card">
+        <h6 class="text-muted fw-semibold">Orders in Progress</h6>
+        <h2 class="text-warning fw-bold">{{ in_progress }}</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 p-4 text-center rounded-4 hover-card">
+        <h6 class="text-muted fw-semibold">Completed Orders</h6>
+        <h2 class="text-success fw-bold">{{ completed }}</h2>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders Table -->
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header bg-light fw-bold fs-5 rounded-top-4">
+      📝 Your Recent Orders
+    </div>
+    <div class="card-body p-0">
+      {% if user.orders.all %}
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead class="table-secondary">
+            <tr>
+              <th>Order ID</th>
+              <th>Vendor</th>
+              <th>Status</th>
+              <th>Scheduled</th>
+              <th>Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in user.orders.all|slice:":5" %}
+            <tr>
+              <td>#{{ order.id }}</td>
+              <td>
+                {% if order.vendor %}
+                  {{ order.vendor.username }}
+                {% else %}
+                  <span class="text-muted">Not Assigned</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if order.status == "pending" %}
+                  <span class="badge bg-secondary">Pending</span>
+                {% elif order.status == "in_progress" %}
+                  <span class="badge bg-warning text-dark">In Progress</span>
+                {% else %}
+                  <span class="badge bg-success">Done</span>
+                {% endif %}
+              </td>
+              <td>{{ order.scheduled_time|date:"M d, Y H:i" }}</td>
+              <td>{{ order.created_at|date:"M d, Y" }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-muted text-center py-3 mb-0">You haven’t placed any orders yet.</p>
+      {% endif %}
+      
+      <div class="text-center m-4">
+        <a href="{% url 'create_order' %}" class="btn btn-gradient btn-lg">
+          + Create Print Order
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Gradient header text */
+  .text-gradient {
+    background: linear-gradient(90deg, #0d6efd, #20c997, #ff5722);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Hover effect for cards */
+  .hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Gradient button */
+  .btn-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2, #ff5722);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  .btn-gradient:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+</style>
+{% endblock %}

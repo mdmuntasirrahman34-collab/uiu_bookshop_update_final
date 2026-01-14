@@ -1,0 +1,140 @@
+{% extends "base_vendor.html" %}
+{% block title %}Vendor Dashboard{% endblock %}
+{% block content %}
+<div class="container mt-5">
+
+  <!-- Approval Warning -->
+  {% if not user.is_approved %}
+    <div class="alert alert-warning text-center fw-bold shadow-sm rounded-3">
+      ⚠️ Your account is not yet approved by the admin. You cannot process orders until approved.
+    </div>
+  {% endif %}
+
+  <h2 class="mb-4 text-center fw-bold text-gradient">Welcome, {{ user.username }} 🛒</h2>
+
+  <!-- Stats Cards -->
+  <div class="row g-4 mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 p-4 text-center rounded-4 hover-card">
+        <h6 class="text-muted fw-semibold">Total Orders Received</h6>
+        <h2 class="text-primary fw-bold">{{ total_orders }}</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 p-4 text-center rounded-4 hover-card">
+        <h6 class="text-muted fw-semibold">Active Orders</h6>
+        <h2 class="text-warning fw-bold">{{ in_progress }}</h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-lg border-0 p-4 text-center rounded-4 hover-card">
+        <h6 class="text-muted fw-semibold">Completed Orders</h6>
+        <h2 class="text-success fw-bold">{{ completed }}</h2>
+      </div>
+    </div>
+  </div>
+
+  {% if user.is_approved %}
+  <!-- Vendor Shop Card -->
+  <div class="card shadow-lg border-0 rounded-4 mb-5 text-center hover-card">
+    <div class="card-header bg-gradient text fw-bold fs-5 rounded-top-4">
+      🏬 Vendor's Shop
+    </div>
+    <div class="card-body">
+      <h5 class="card-title fw-bold">List Your Items & Sell!</h5>
+      <p class="card-text text-muted">
+        Showcase your products, offer special discounts, and start selling immediately.
+      </p>
+      <a href="{% url 'my_store' %}" class="btn btn-gradient btn-lg">My Store</a>
+    </div>
+    <div class="card-footer text-body-secondary">
+      Many more exciting features await 🎉
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Recent Orders Table -->
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header bg-light fw-bold fs-5 rounded-top-4">
+      🖨 Recent Print Orders Assigned to You
+    </div>
+    <div class="card-body p-0">
+      {% if user.vendor_orders.all %}
+        <div class="table-responsive">
+          <table class="table table-hover mb-0 align-middle">
+            <thead class="table-secondary">
+              <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Status</th>
+                <th>Scheduled</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in user.vendor_orders.all|slice:":5" %}
+                <tr>
+                  <td>#{{ order.id }}</td>
+                  <td>{{ order.student.username }}</td>
+                  <td>
+                    {% if order.status == "pending" %}
+                      <span class="badge bg-secondary">Pending</span>
+                    {% elif order.status == "in_progress" %}
+                      <span class="badge bg-warning text-dark">In Progress</span>
+                    {% else %}
+                      <span class="badge bg-success">Done</span>
+                    {% endif %}
+                  </td>
+                  <td>{{ order.scheduled_time|date:"M d, Y H:i" }}</td>
+                  <td>{{ order.created_at|date:"M d, Y" }}</td>
+                  <td>
+                    <a href="{% url 'update_order' order.id %}" class="btn btn-sm btn-outline-primary">
+                      Update
+                    </a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="text-muted text-center py-3 mb-0">No orders assigned yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+<style>
+  /* Gradient header text */
+  .text-gradient {
+    background: linear-gradient(90deg, #0d6efd, #20c997, #ff5722);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Hover effect for cards */
+  .hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Gradient button */
+  .btn-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2, #ff5722);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 12px;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  .btn-gradient:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Your Cart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 fw-bold text-center">Your Shopping Cart 🛒</h2>
+
+    {% if not cart.items.all %}
+        <div class="alert alert-info text-center" role="alert">
+            Your cart is empty. <a href="{% url 'shop' %}" class="alert-link">Go shopping!</a>
+        </div>
+    {% else %}
+        <div class="card card-custom">
+            <div class="card-body p-4">
+                <ul class="list-group list-group-flush">
+                    {% for cart_item in cart.items.all %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                        <div class="d-flex align-items-center">
+                            {% if cart_item.item.image %}
+                            <img src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}" 
+                                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 15px;">
+                            {% endif %}
+                            <div>
+                                <h6 class="mb-0 fw-semibold">{{ cart_item.item.name }}</h6>
+                                <small class="text-muted">
+                                    {{ cart_item.quantity }} x {{ cart_item.item.price }} Tk
+                                </small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="fw-bold me-4">{{ cart_item.total_price }} Tk</span>
+                            <a href="{% url 'remove_from_cart' cart_item.id %}" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <hr>
+
+                <div class="d-flex justify-content-end align-items-center">
+                    <h4 class="fw-bold mb-0 me-3">Total:</h4>
+                    <h3 class="fw-bolder text-primary mb-0">{{ cart.total_price }} Tk</h3>
+                </div>
+
+                <div class="text-end mt-4">
+                    <a href="{% url 'cart_checkout' %}" class="btn btn-primary btn-lg px-5">
+                        Proceed to Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

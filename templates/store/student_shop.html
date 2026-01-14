@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}Stationery Shop{% endblock %}
+{% block content %}
+<div class="container py-5">
+  
+  {% if request.user.role == "student" %}
+  <h2 class="mb-5 fw-bold text-center text-gradient">
+    ✨ Explore our items sold by students ✨
+  </h2>
+  <a href="{% url 'student_my_store'  %}" class="btn btn-gradient fw-semibold px-5">
+                  Add Items
+  </a>
+  <a href="{% url 'student_vendor_orders'  %}" class="btn btn-gradient fw-semibold px-5">
+                  Manage Order
+  </a>
+  {% else %}
+    <h2 class="mb-5 fw-bold text-center text-gradient">
+    ✨ Approve student posted items ✨
+  </h2>
+  {% endif %}
+
+  
+  {% for category in categories %}
+    <h4 class="mt-5 mb-3 fw-semibold text-dark border-bottom pb-2">
+      {{ category.name }}
+    </h4>
+    <div class="row g-4">
+      {% for item in category.student_items.all %}
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="card shadow-sm border-0 h-100 rounded-4 overflow-hidden hover-card bg-light bg-gradient">
+            <div class="position-relative">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height:200px; object-fit:cover;">
+              {% else %}
+                <img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top" alt="{{ item.name }}">
+              {% endif %}
+              <span class="badge bg-success position-absolute top-0 end-0 m-2 px-3 py-2">
+                {{ item.price }} Tk
+              </span>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title fw-bold text-truncate">{{ item.name }}</h5>
+              <!-- <p><b>Approved by: {{ item.approved_by }}</b></p> -->
+              <p class="card-text text-muted small mb-3" style="min-height: 40px;">
+                {{ item.description|truncatewords:12 }}
+              </p>
+              <div class="mt-auto">
+                <div class="mt-auto">
+                {% if request.user.role == "vendor" and item.status == "inactive" %}
+                  <form action="{% url 'approve_student_item' item.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success w-100 fw-semibold">
+                      ✅ Approve Item
+                    </button>
+                  </form>
+                {% else %}
+                  <a href="{% url 'order_item' item.id %}" class="btn btn-gradient w-100 fw-semibold">
+                    🛒 Order Now
+                  </a>
+                {% endif %}
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No items in this category.</p>
+      {% endfor %}
+
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+/* Fancy gradient title */
+.text-gradient {
+  background: linear-gradient(90deg, #0d6efd, #20c997, #ff5722);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth hover effect */
+.hover-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.hover-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Fancy price ribbon */
+.price-badge {
+  position: absolute;
+  top: 12px;
+  right: -25px;
+  background: linear-gradient(135deg, #20c997, #0dcaf0);
+  color: white;
+  padding: 6px 40px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  transform: rotate(45deg);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+/* Gradient button */
+.btn-gradient {
+  background: linear-gradient(90deg, #0d6efd, #6610f2, #2261ff);
+  color: #fff;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+  border-radius: 50px;
+}
+.btn-gradient:hover {
+  background: linear-gradient(90deg, #ff5722, #6610f2, #0d6efd);
+  transform: scale(1.05);
+  color: #fff;
+}
+</style>
+{% endblock %}

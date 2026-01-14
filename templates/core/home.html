@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}UIU Bookshop & Print{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="py-5 bg-gradient" style="background: linear-gradient(135deg, #0d6efd, #6610f2);">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-center text-lg-start ">
+        <h1 class="fw-bold display-4">Welcome to <p><span class="text-warning">UIU Bookshop</span> 🖨️</p></h1>
+        <p class="lead">
+          Your one-stop hub for <strong>printing services</strong> and <strong>student essentials</strong>.  
+          Print documents, buy stationery, and order books with just a few clicks!
+        </p>
+        <div class="mt-4">
+          <a href="{% url 'create_order' %}" class="btn btn-warning btn-lg me-2 shadow">
+            <i class="bi bi-printer"></i> Print Now
+          </a>
+          <a href="{% url 'shop' %}" class="btn btn-light btn-lg shadow">
+            <i class="bi bi-shop"></i> Visit Shop
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center mt-4 mt-lg-0">
+        <img src="{% static 'images/printing_illustrations.jpg' %}" alt="Printing Service" 
+             class="img-fluid rounded-4 shadow-lg">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mt-5">
+  <div class="row g-4">
+    {% for feature in features %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 text-center p-4 border-0 shadow rounded-4 
+                    {% cycle 'bg-light' 'bg-primary text-white' 'bg-success text-white' 'bg-warning text-dark' %}">
+          <div class="mb-3">
+            <i class="bi {{ feature.icon }} display-4"></i>
+          </div>
+          <h5 class="fw-bold">{{ feature.title }}</h5>
+          <p class="small">{{ feature.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Promo Section -->
+<div class="container mt-5">
+  <div class="row g-4">
+    <div class="col-lg-6">
+      <div class="card h-100 p-4 shadow border-0 rounded-4 bg-light">
+        <h4 class="fw-bold text-primary"><i class="bi bi-printer-fill"></i> Fast & Reliable Printing</h4>
+        <p class="text-muted">
+          Upload your assignments, reports, or projects and get them printed instantly with professional quality.  
+          Same-day delivery available for urgent needs!
+        </p>
+        <a href="{% url 'create_order' %}" class="btn btn-primary mt-2">Start Printing</a>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card h-100 p-4 shadow border-0 rounded-4 bg-success text-white">
+        <h4 class="fw-bold"><i class="bi bi-bag-fill"></i> Shop Student Essentials</h4>
+        <p>
+          Browse our marketplace for books, stationery, and study materials sold directly by trusted vendors.  
+          Special discounts for students!
+        </p>
+        <a href="{% url 'shop' %}" class="btn btn-light mt-2">Browse Shop</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Call to Action -->
+<div class="mt-5 py-5 text-center text-white" 
+     style="background: linear-gradient(135deg, #20c997, #0dcaf0);">
+  <div class="container">
+    <h3 class="fw-bold">Everything you need in one place 🎓</h3>
+    <p class="lead">From printing assignments to buying books — UIU Bookshop has you covered.</p>
+    <a href="{% url 'register' %}" class="btn btn-dark btn-lg mt-2 shadow">
+      <i class="bi bi-person-plus"></i> Join Now
+    </a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base_acc.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="auth-card">
+  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/United_International_University_Monogram.svg/250px-United_International_University_Monogram.svg.png" alt="" width="40%" class="mx-auto d-block my-4">
+  <h3 class="text-center mb-4">Welcome Back</h3>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+    </div>
+    <button type="submit" class="btn btn-custom w-100">Login</button>
+  </form>
+
+  <p class="text-center mt-3">
+    Don’t have an account? <a href="{% url 'register' %}">Register</a>
+  </p>
+</div>
+{% endblock %}
