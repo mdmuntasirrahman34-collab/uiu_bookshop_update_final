@@ -1,6 +1,9 @@
-pip install django-widget-tweaks
+#pip install django-widget-tweaks
 pip install Pillow
 pip install stripe
 
+Django
+Pillow
+django-widget-tweaks
 
 Demo Card: 4242 4242 4242 4242
