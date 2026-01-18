@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-86%z$8^pw#yl2xkm=wapq=7lc0p7^gap4$$x^wx(+anzyhxq02'
+SECRET_KEY = 'django-insecure-86%z$8^pw#yl2xkm=wapq=7lc0p7^gap4$$x^wx(+anzyhxq02'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,8 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
-#STRIPE_PUBLIC_KEY = "pk_test_51SJx6GDs58Mmn85vOQZxmxoX7nYQrM3G9t1Vs8AYMgi6MGzm3Ip3BrtPrrYuTAMw6MzN37jBKm48lzuIoax51DZs00kui720uk"   # replace with your key
-#STRIPE_SECRET_KEY = "sk_test_51SJx6GDs58Mmn85vD38a3yvSWZQW48qFRoH3dGgpCzI1KbwhRwEZl0r9FFEW4X1ZfiVpuczvxsbBERRhJqDqDYqu00Ap9nBuun"   # replace with your key
+STRIPE_PUBLIC_KEY = "pk_test_51SJx6GDs58Mmn85vOQZxmxoX7nYQrM3G9t1Vs8AYMgi6MGzm3Ip3BrtPrrYuTAMw6MzN37jBKm48lzuIoax51DZs00kui720uk"   # replace with your key
+STRIPE_SECRET_KEY = "sk_test_51SJx6GDs58Mmn85vD38a3yvSWZQW48qFRoH3dGgpCzI1KbwhRwEZl0r9FFEW4X1ZfiVpuczvxsbBERRhJqDqDYqu00Ap9nBuun"   # replace with your key
 
 # Application definition
 
@@ -138,4 +138,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 LOGIN_URL = 'login'
+
 
