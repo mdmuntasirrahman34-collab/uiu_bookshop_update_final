@@ -25,7 +25,7 @@ SECRET_KEY = 'xw(p667(wupwp)mc1q#w_5#0m-4^g!3i2(t9lcmhc)es1dwf32'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 STRIPE_PUBLIC_KEY = "pk_test_51SJx6GDs58Mmn85vOQZxmxoX7nYQrM3G9t1Vs8AYMgi6MGzm3Ip3BrtPrrYuTAMw6MzN37jBKm48lzuIoax51DZs00kui720uk"   # replace with your key
@@ -138,4 +138,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 LOGIN_URL = 'login'
+
 
