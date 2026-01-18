@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-86%z$8^pw#yl2xkm=wapq=7lc0p7^gap4$$x^wx(+anzyhxq02'
+SECRET_KEY = 'xw(p667(wupwp)mc1q#w_5#0m-4^g!3i2(t9lcmhc)es1dwf32'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -138,3 +138,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 LOGIN_URL = 'login'
+
